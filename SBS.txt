@@ -47,3 +47,4 @@
 2. create file errorController for validasi ApiError
 3. set errorhandler to all API on app.js
 4. use ApiError to CRUD controllers
+5. create validasi from ApiError
