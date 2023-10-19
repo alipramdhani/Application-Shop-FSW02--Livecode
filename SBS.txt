@@ -1,3 +1,4 @@
+### STEP BY STEP ###
 ### Application Shop FSW02 ###
 
 
@@ -40,3 +41,9 @@
 10. next create folder views to added file ejs (untuk menampilkan fungsi CRUD menggunakan website)
 11. if you done, check your CRUD from Website  
 "http://localhost:8000/dashboard/admin/create"
+
+#Step-03 : create Error Handler 
+1. create middleware apiError on folder utils  
+2. create file errorController for validasi ApiError
+3. set errorhandler to all API on app.js
+4. use ApiError to CRUD controllers

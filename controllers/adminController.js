@@ -1,16 +1,12 @@
-const imagekit = require("../lib/imagekit");
 const { Product } = require("../models");
-// library-imagekit
+const imagekit = require("../lib/imagekit");
+const ApiError = require("../utils/apiError");
 
-const createPage = async (req, res) => {
+const createPage = async (req, res, next) => {
   res.render("create.ejs");
 };
 
-// const deletePage = async (req, res) => {
-//   res.render("index.ejs");
-// };
-
-const createProduct = async (req, res) => {
+const createProduct = async (req, res, next) => {
   const { name, price, stock } = req.body;
   const file = req.file;
 
@@ -33,16 +29,11 @@ const createProduct = async (req, res) => {
     res.redirect("/dashboard/admin");
   } catch (err) {
     // use errorhandler
-    // ...
-    // without errorhandler
-    res.status(400).json({
-      status: "failed",
-      message: err.message,
-    });
+    next(new ApiError(err.message, 400));
   }
 };
 
-const findAll = async (req, res) => {
+const findAll = async (req, res, next) => {
   try {
     // process find data product
     const products = await Product.findAll();
@@ -52,34 +43,7 @@ const findAll = async (req, res) => {
     });
   } catch (err) {
     // use errorhandler
-    // ...
-    // without errorhandler
-    res.status(400).json({
-      status: "failed",
-      message: err.message,
-    });
-  }
-};
-
-const deleteProduct = async (req, res) => {
-  const { name, price, stock } = req.body;
-  try {
-    // proccess delete product
-    await Product.destroy({
-      where: {
-        id: req.params.id,
-      },
-    });
-    //status success process (200)
-    res.redirect("/dashboard/admin");
-  } catch (err) {
-    // use errorhandler
-    // ...
-    // without errorhandler
-    res.status(400).json({
-      status: "failed",
-      message: err.message,
-    });
+    next(new ApiError(err.message, 400));
   }
 };
 
@@ -87,6 +51,4 @@ module.exports = {
   createProduct,
   findAll,
   createPage,
-  // deletePage,
-  deleteProduct,
 };

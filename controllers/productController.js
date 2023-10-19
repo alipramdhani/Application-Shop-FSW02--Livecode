@@ -1,25 +1,30 @@
-const imagekit = require("../lib/imagekit");
 const { Product } = require("../models");
+const imagekit = require("../lib/imagekit");
+const ApiError = require("../utils/apiError");
 // library-imagekit
 
-const createProduct = async (req, res) => {
+const createProduct = async (req, res, next) => {
   const { name, price, stock } = req.body;
   const file = req.file;
+  let img;
 
   try {
-    // process upload image to imagekit
-    const split = file.originalname.split(".");
-    const extension = split[split.length - 1];
-    const img = await imagekit.upload({
-      file: file.buffer,
-      fileName: `IMG-${Date.now()}.${extension}`,
-    });
+    if (file) {
+      // process upload image to imagekit
+      const split = file.originalname.split(".");
+      const extension = split[split.length - 1];
+      const uploadedImage = await imagekit.upload({
+        file: file.buffer,
+        fileName: `IMG-${Date.now()}.${extension}`,
+      });
+      img = uploadedImage.url;
+    }
     // process create data product
     const newProduct = await Product.create({
       name,
       price,
       stock,
-      imageUrl: img.url,
+      imageUrl: img,
     });
     // status success create (201)
     res.status(201).json({
@@ -30,16 +35,11 @@ const createProduct = async (req, res) => {
     });
   } catch (err) {
     // use errorhandler
-    // ...
-    // without errorhandler
-    res.status(400).json({
-      status: "failed",
-      message: err.message,
-    });
+    next(new ApiError(err.message, 400));
   }
 };
 
-const findAll = async (req, res) => {
+const findAll = async (req, res, next) => {
   try {
     // process find data product
     const products = await Product.findAll();
@@ -52,16 +52,11 @@ const findAll = async (req, res) => {
     });
   } catch (err) {
     // use errorhandler
-    // ...
-    // without errorhandler
-    res.status(400).json({
-      status: "failed",
-      message: err.message,
-    });
+    next(new ApiError(err.message, 400));
   }
 };
 
-const findById = async (req, res) => {
+const findById = async (req, res, next) => {
   try {
     // process find product by ID
     const product = await Product.findOne({
@@ -78,32 +73,29 @@ const findById = async (req, res) => {
     });
   } catch (err) {
     // use errorhandler
-    // ...
-    // without errorhandler
-    res.status(400).json({
-      status: "failed",
-      message: err.message,
-    });
+    next(new ApiError(err.message, 400));
   }
 };
 
-const updateProduct = async (req, res) => {
+const updateProduct = async (req, res, next) => {
   const { name, price, stock } = req.body;
   try {
-    // process update product
-    await Product.update(
-      {
-        name,
-        price,
-        stock,
-        //imageUrl: img.url (belum bisa karena di file ejs belum membuat fitur update)
+    const product = await Product.findOne({
+      where: {
+        id: req.params.id,
       },
-      {
-        where: {
-          id: req.params.id,
-        },
-      }
-    );
+    });
+    // validasi jika id tidak ada
+    if (!product) {
+      next(new ApiError("product ID does not exist!!"));
+    }
+    // process update product
+    await Product.update({
+      name,
+      price,
+      stock,
+      //imageUrl: img.url (belum bisa karena di file ejs belum membuat fitur update)
+    });
     //status success process (200)
     res.status(200).json({
       status: "success",
@@ -111,19 +103,23 @@ const updateProduct = async (req, res) => {
     });
   } catch (err) {
     // use errorhandler
-    // ...
-    // without errorhandler
-    res.status(400).json({
-      status: "failed",
-      message: err.message,
-    });
+    next(new ApiError(err.message, 400));
   }
 };
 
-const deleteProduct = async (req, res) => {
+const deleteProduct = async (req, res, next) => {
   const { name, price, stock } = req.body;
   try {
     // proccess delete product
+    const product = await Product.findOne({
+      where: {
+        id: req.params.id,
+      },
+    });
+    // validasi jika id tidak ada
+    if (!product) {
+      next(new ApiError("Product ID does not exist!"));
+    }
     await Product.destroy({
       where: {
         id: req.params.id,
@@ -136,12 +132,7 @@ const deleteProduct = async (req, res) => {
     });
   } catch (err) {
     // use errorhandler
-    // ...
-    // without errorhandler
-    res.status(400).json({
-      status: "failed",
-      message: err.message,
-    });
+    next(new ApiError(err.message, 400));
   }
 };
 
