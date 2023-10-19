@@ -26,6 +26,7 @@
 
 
 #Step-02 : Add Imagekit and middleware multer to upload the image into the database
+
 1. npm install Imagekit
 2. npm install multer
 3. create folder lib for added file imagekit.js
