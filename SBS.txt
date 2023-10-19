@@ -1,0 +1,41 @@
+### Application Shop FSW02 ###
+
+
+#Step-01 : Create EJS CRUD with Sequelize 
+1. npm init
+2. create app.js
+3. npm install nodemon morgan express pg pg-hstore sequelize sequelize-cli dotenv  
+3. npx sequelize init
+4. npx sequelize model:generate --name Product --attributes name:string,price:float,stock:integer,imageUrl:text 
+5. npx sequelize db:create (if you want to create new database)
+5. add link image-placeholder from imageUrl on Migrations & models folder
+6. npx sequelize db:migrate (if you done create migration files)
+7. npx sequelize db:migrate:undo:all (if you want to undo all table from database)
+8. npx sequelize db:nametable:undo (if you want to undo one table from database)
+9. create folder controllers & routes to create EJS CRUD  
+10. if you done create CRUD, check your CRUD API on POSTMAN
+
+    +++ you can check on POSTMAN +++
+    - productController.js with productRoutes
+    - userController.js with userRoutes
+    - shopController.js with shopRoutes
+    - authController.js with authRoutes
+
+    +++ you can check on WEBSITE +++
+    - adminController with adminRoutes
+
+
+#Step-02 : Add Imagekit and middleware multer to upload the image into the database
+1. npm install Imagekit
+2. npm install multer
+3. create folder lib for added file imagekit.js
+4. in file imagekit.js, copy code from https://imagekit.io (developer option -> Node.js)
+5. create middlewares multer named uploader.js  (untuk memproses upload image ke imagekit dan link image dari imagekit akan masuk kedalam database)
+6. add proccess upload image to productController.js
+7. import multer to file routes and add "upload.single("image")" to create API.
+8. if you done, check your create Image on POSTMAN
+9. if you will use CRUD as admin and created from website you can add file 
+(adminController.js with adminRoutes)
+10. next create folder views to added file ejs (untuk menampilkan fungsi CRUD menggunakan website)
+11. if you done, check your CRUD from Website  
+"http://localhost:8000/dashboard/admin/create"

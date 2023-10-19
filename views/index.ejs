@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Store Application</title>
+    <style>
+      table,
+      th,
+      td {
+        padding: 10px;
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Welcome to our Store</h1>
+
+    <table>
+      <th>no</th>
+      <th>Nama</th>
+      <th>Price</th>
+      <th>stok</th>
+      <th>Image</th>
+      <th>Delete</th>
+
+      <% products.map((product) => { %>
+
+      <tr>
+        <td><%= product.id %></td>
+        <td><%= product.name %></td>
+        <td><%= product.price %></td>
+        <td><%= product.stock %></td>
+        <td>
+          <img
+            src="<%= product.imageUrl %>"
+            style="width: 300px; height: 300px"
+          />
+        </td>
+        <td>
+          <form
+            method="DELETE"
+            action="/products/delete <%= product.id %>"
+            enctype="multipart/form-data"
+          >
+            <button type="submit">delete</button>
+          </form>
+        </td>
+      </tr>
+      <% }) %>
+    </table>
+    <br />
+  </body>
+</html>

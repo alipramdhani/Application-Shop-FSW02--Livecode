@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Store Application</title>
+  </head>
+  <body>
+    <h2>CREATE FORM</h2>
+    <!-- action="/product/create/" ==> Page ini akan mengirim data ke createProduct untuk membuat product baru -->
+    <form action="/products/create" method="POST" enctype="multipart/form-data">
+      <label for="">Name</label>
+      <input type="text" name="name" id="" />
+      <label for="">Price</label>
+      <input type="text" name="price" id="" />
+      <label for="">Stock</label>
+      <input type="text" name="stock" id="" />
+      <label for="">Image</label>
+      <input type="file" name="image" id="" />
+
+      <button type="submit">create</button>
+    </form>
+  </body>
+</html>
