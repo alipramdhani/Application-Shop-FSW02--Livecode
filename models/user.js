@@ -12,7 +12,11 @@ module.exports = (sequelize, DataTypes) => {
       User.hasOne(models.Auth, {
         foreignKey: {
           name: "userId",
-          allowNull: false,
+        },
+      });
+      User.belongsTo(models.Shop, {
+        foreignKey: {
+          name: "shopId",
         },
       });
     }
@@ -26,6 +30,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.ENUM(["Owner", "Staff"]),
         defaultValue: "Staff",
       },
+      shopId: DataTypes.INTEGER,
     },
     {
       sequelize,
