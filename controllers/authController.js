@@ -40,6 +40,7 @@ const register = async (req, res, next) => {
       name,
       address,
       age,
+      shopId: req.user.shopId,
     });
     await Auth.create({
       email,
