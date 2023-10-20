@@ -10,9 +10,10 @@ const createProduct = async (req, res, next) => {
 
   try {
     if (file) {
-      // process upload image to imagekit
+      // get extention file
       const split = file.originalname.split(".");
       const extension = split[split.length - 1];
+      // processing upload file to imagekit
       const uploadedImage = await imagekit.upload({
         file: file.buffer,
         fileName: `IMG-${Date.now()}.${extension}`,
