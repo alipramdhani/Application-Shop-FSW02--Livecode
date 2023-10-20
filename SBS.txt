@@ -68,4 +68,4 @@
 12. if you done, check Api register on POSTMAN
 13. next login with your account after you created 
 14. after login you will get token from jwt, copy token for authentication to APi Get Product
-15. create middleware checkRole,js (untuk mengechek role user admin apakah dia Owner atau Staff)
+15. create middleware checkRole,js (untuk mengechek role user admin apakah dia Owner atau Staff).
