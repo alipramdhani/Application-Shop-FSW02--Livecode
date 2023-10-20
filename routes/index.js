@@ -1,14 +1,14 @@
 //export
 const router = require("express").Router();
-//error handler
-// ...
 
 //import routes
 const Product = require("./productRoutes");
 const Admin = require("./adminRoutes");
+const Auth = require("./authRoutes");
 
 //api
 router.use("/api/v1/products", Product);
+router.use("/api/v1/auths", Auth);
 router.use("/", Admin);
 
 //export

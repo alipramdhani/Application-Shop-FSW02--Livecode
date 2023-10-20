@@ -1,5 +1,5 @@
 const multer = require("multer");
-
+const ApiError = require("../utils/apiError");
 const multerFiltering = (req, file, cb) => {
   if (
     file.mimetype == "image/png" ||
@@ -8,7 +8,7 @@ const multerFiltering = (req, file, cb) => {
   ) {
     cb(null, true);
   } else {
-    return cb("The image format is not suitable.");
+    return cb(next(new ApiError("The image format is not suitable.", 400)));
   }
 };
 

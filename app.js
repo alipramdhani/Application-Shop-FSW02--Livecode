@@ -13,6 +13,8 @@ const PORT = process.env.PORT || 8000;
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+// add image to local direcotry
+app.use(express.static(`${__dirname}/public`));
 
 // setting view engine
 app.set("views", __dirname + "/views");

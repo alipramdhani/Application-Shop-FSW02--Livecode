@@ -26,7 +26,7 @@
     - adminController with adminRoutes
 
 
-#Step-02 : Add Imagekit and middleware multer to upload the image into the database
+#Step-03 : Add Imagekit and middleware multer to upload the image into the database
 
 1. npm install Imagekit
 2. npm install multer
@@ -48,3 +48,23 @@
 3. set errorhandler to all API on app.js
 4. use ApiError to CRUD controllers
 5. create validasi from ApiError
+
+
+#Step-04 : Create Authentication and Authorization 
+1. create database diagram from dbdiagram.io 
+2. add table User, Shop and Auth to database
+3. npx sequelize model:generate --name User/Auth/Shop --attributes name:string,price:float,stock:integer,imageUrl:text 
+4. npx sequelize db:migrate:undo:all (if you want to undo all table from database)
+5. npx sequelize db:nametable:undo (if you want to undo one table from database)
+6. create file authController with authRoutes
+7. npm i bcrypt : for hashed password (sensor password)
+8. npm i jwt : for give token to verify account
+9. create associate from folder models
+    BelongsTo akan menambahkan ForeignKey pada sumber di mana hasOne akan menambahkan target 
+    (Sequelize membuat kolom baru 'UserId' di tabel 'Auth' , tetapi tidak membuat kolom 'AuthId' di tabel 'User').
+
+10. create middleware authenticate.js, (untuk membuat token pada proses auth user)
+    Payload permintaan adalah informasi penting dalam blok data yang dikirim klien ke server dalam isi pesan HTTP POST , PUT , atau PATCH yang berisi informasi penting tentang permintaan tersebut. 
+11. create middleware checkRole,js (untuk mengechek role user admin apakah dia Owner atau Staff)
+12. if you done, check Api register on POSTMAN
+13. next login with your account after you created 
